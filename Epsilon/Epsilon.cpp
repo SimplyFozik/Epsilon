@@ -2,6 +2,6 @@
 
 int main()
 {
-    sendMessage("Debug", "This is debug message", true);
-    silentMessage("To check how this is working", false);
+	sendMessage("Epsilon", "Hello :D", true);
+	recvMessage("USER", "Type Command: ");
 }
