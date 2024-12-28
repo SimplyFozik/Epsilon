@@ -7,6 +7,9 @@
 // Additional libraries
 #include <chrono>
 #include <thread>
+#include <stdlib.h>
+#include <cctype>
+#include <algorithm>
 
 // Namespaces
 using namespace std;
@@ -14,6 +17,11 @@ using namespace std;
 // Global variables
 
 // Additional functions
+
+void commandHandle(string text)
+{
+	transform(text.begin(), text.end(), text.begin(),[](unsigned char c) { return tolower(c); });
+}
 
 char returnBoolChar(bool boolean) // for sendMessage to return /n or break
 {
@@ -45,5 +53,24 @@ void sendMessage(string sender, string message,bool newStroke) // ex - [Epsilon]
 void recvMessage(string userName,string noteMessage)
 {
 	string recievedMsg;
-	cout << "[" << userName << "]" << " " << noteMessage; cin >> recievedMsg;
+	cout << endl << "[" << userName << "]" << " " << noteMessage; cin >> recievedMsg;
+	commandHandle(recievedMsg);
+}
+
+// Threading
+
+void startThreads()
+{
+	for (;;)
+	{
+		thread th1(recvMessage, "User", "Type Command: ");
+		th1.join();
+	}
+}
+
+// Initialization
+void epsilonInitialize()
+{
+	sendMessage("Epsilon", "Epsilon Initialized", true);
+	startThreads();
 }
